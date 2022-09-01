@@ -1,0 +1,74 @@
+import React from 'react'
+import { useState } from 'react'
+const Form = () => {
+    const [fvalue, setFvalue] = useState({
+        name: "abc",
+        email: "def@gmail.com",
+        message: "hello world"
+    })
+    const [formData, serFormData] = useState([{
+        name: "abc",
+        email: "def@gmail.com",
+        message: "hello world"
+    }])
+    const onChange = (e) => {
+        const value = e.target.value
+        const name = e.target.name
+        setFvalue({
+            ...fvalue, // all data show if not use show only updated data
+            [name]: value //value store in name
+        })
+    }
+    const dataStore = (e) => {
+        e.preventDefault();
+        serFormData([
+            ...formData,
+            fvalue
+        ])
+    }
+    return (
+        <>
+            <div className='container mt-5'>
+                <div className="form-box">
+                    <form action="" >
+                        <div className="form-group pt-3">
+                            <label htmlFor="name">Name</label>
+                            <input className="form-control" id="name" type="text" name="name" value={fvalue.name} onChange={onChange} />
+                        </div>
+                        <div className="form-group pt-3">
+                            <label htmlFor="email">Email</label>
+                            <input className="form-control" id="email" type="email" name="email" value={fvalue.email} onChange={onChange} />
+                        </div>
+                        <div className="form-group pt-3">
+                            <label htmlFor="message">Message</label>
+                            <textarea className="form-control" id="message" name="message" value={fvalue.message} onChange={onChange}></textarea>
+                        </div>
+                        <button className="btn btn-primary mt-5"  onClick={dataStore} >Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div className="container">
+                <table className="table table-striped table-bordered
+                                    table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th> name  </th>
+                            <th> email </th>
+                            <th> message </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {formData.map((d, i) => (
+                            <tr className="table-success" key={i}>
+                                <td> {d.name} </td>
+                                <td> {d.email} </td>
+                                <td> {d.message}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
+    )
+}
+export default Form
